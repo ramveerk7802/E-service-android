@@ -56,7 +56,7 @@ private fun App(modifier: Modifier, navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
-            model = R.drawable.e_service_banner,
+            model = R.drawable.logo,
             contentDescription = "Banner",
             modifier = Modifier.fillMaxWidth()
                 .height(220.dp)
