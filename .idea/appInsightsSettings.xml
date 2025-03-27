@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.rvcode.e_service" />
+                  <option name="mobileSdkAppId" value="1:470530757318:android:edba8269380a31da24fdc7" />
+                  <option name="projectId" value="e-service-6ccc2" />
+                  <option name="projectNumber" value="470530757318" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

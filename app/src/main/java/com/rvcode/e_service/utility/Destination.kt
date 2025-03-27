@@ -12,9 +12,15 @@ sealed class Destination {
 
 
     @Serializable
-    data class SignIn(val role:MyRole?=null):Destination()
+    data object SignIn:Destination()
 
 
     @Serializable
     data class Registration(val role:MyRole?=null):Destination()
+
+    @Serializable
+    data object Home:Destination()
+
+    @Serializable
+    data object ElectricianHome:Destination()
 }

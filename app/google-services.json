@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "470530757318",
+    "project_id": "e-service-6ccc2",
+    "storage_bucket": "e-service-6ccc2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470530757318:android:edba8269380a31da24fdc7",
+        "android_client_info": {
+          "package_name": "com.rvcode.e_service"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAccOy4MhgfoBWw2DdxUv4qDN6IqFI7pVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

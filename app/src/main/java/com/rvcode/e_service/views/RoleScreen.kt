@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,8 +39,20 @@ fun RoleScreen(navController: NavHostController) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Your Role"
+                        text = "Register for role"
                     )
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            navController.popBackStack()
+                        }
+                    ){
+                        Icon(
+                            painter = painterResource(R.drawable.back_arrow),
+                            contentDescription = "back button"
+                        )
+                    }
                 }
             )
         }
@@ -66,12 +80,8 @@ private fun App(modifier: Modifier, navController: NavHostController) {
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 navController.navigate(
-                    Destination.SignIn(MyRole.USER)
-                ){
-                    popUpTo<Destination.RoleScreen>{
-                        inclusive=true
-                    }
-                }
+                    Destination.Registration(MyRole.CUSTOMER)
+                )
             },
 
                 border = BorderStroke(
@@ -97,12 +107,8 @@ private fun App(modifier: Modifier, navController: NavHostController) {
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 navController.navigate(
-                    Destination.SignIn(MyRole.ELECTRICIAN)
-                ){
-                    popUpTo<Destination.RoleScreen>{
-                        inclusive=true
-                    }
-                }
+                    Destination.Registration(MyRole.ELECTRICIAN)
+                )
             },
             colors = ButtonDefaults.outlinedButtonColors(
                 contentColor = Color.Red

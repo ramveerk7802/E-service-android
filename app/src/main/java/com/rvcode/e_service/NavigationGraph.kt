@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.rvcode.e_service.utility.Destination
+import com.rvcode.e_service.views.ElectricianHomeScreen
+import com.rvcode.e_service.views.HomeScreen
 import com.rvcode.e_service.views.RegistrationScreen
 
 import com.rvcode.e_service.views.RoleScreen
@@ -17,15 +19,19 @@ fun NavigationGraph(navController: NavHostController){
 
     NavHost(
         navController = navController,
-        startDestination = Destination.RoleScreen
+        startDestination = Destination.Home
     ){
-            composable<Destination.RoleScreen> {
+        composable<Destination.Home> {
+            HomeScreen(navController)
+        }
+        composable<Destination.ElectricianHome> {
+            ElectricianHomeScreen(navController)
+        }
+        composable<Destination.RoleScreen> {
                 RoleScreen(navController)
             }
-        composable<Destination.SignIn> {backStack->
-            val arg = backStack.toRoute<Destination.SignIn>()
-            val role = arg.role
-            SignInScreen(navController,role)
+        composable<Destination.SignIn> {
+            SignInScreen(navController)
         }
         composable<Destination.Registration> {
             val args = it.toRoute<Destination.Registration>()

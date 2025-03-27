@@ -49,40 +49,30 @@ import coil3.compose.AsyncImage
 import com.rvcode.e_service.R
 import com.rvcode.e_service.utility.Destination
 import com.rvcode.e_service.utility.MyRole
+import com.rvcode.e_service.utilityCompose.MyInputTextField
 import com.rvcode.e_service.utilityCompose.MyOutlinedButton
+import com.rvcode.e_service.utilityCompose.MyPasswordInputField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(navHostController: NavHostController, role: MyRole?) {
+fun SignInScreen(navHostController: NavHostController) {
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = {
                 Text(text = "Sign in")
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = {
-                        navHostController.popBackStack()
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.back_arrow),
-                        contentDescription = ""
-                    )
-                }
             }
 
         )
     }) {
-        App(Modifier.padding(it), navHostController, role)
+        App(Modifier.padding(it), navHostController)
     }
 
 
 }
 
 @Composable
-private fun App(modifier: Modifier, navHostController: NavHostController, role: MyRole?) {
+private fun App(modifier: Modifier, navHostController: NavHostController) {
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(true) }
@@ -101,51 +91,8 @@ private fun App(modifier: Modifier, navHostController: NavHostController, role: 
             model = R.drawable.logo,
             contentDescription = "Banner",
         )
-        OutlinedTextField(value = emailState.value, onValueChange = {
-            emailState.value = it
-        }, placeholder = {
-            Text(text = "Email")
-        }, label = {
-            Text(text = "Email")
-        }, leadingIcon = {
-            Icon(
-                imageVector = Icons.Outlined.Email,
-                contentDescription = ""
-            )
-        },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-        )
-
-        OutlinedTextField(
-            value = passwordState.value,
-            onValueChange = {
-                passwordState.value = it
-            }, placeholder = {
-                Text(text = "Password")
-            }, label = {
-                Text(text = "Password")
-            }, leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Lock,
-                    contentDescription = ""
-                )
-            },
-            visualTransformation = if (passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
-            trailingIcon = {
-                IconButton(
-                    onClick = {
-                        passwordVisible = !passwordVisible
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(if (passwordVisible) R.drawable.eye_closed else R.drawable.eye_open),
-                        contentDescription = ""
-                    )
-                }
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-
-        )
+        MyInputTextField(emailState,"Email","example@gmail.com",Icons.Outlined.Email)
+        MyPasswordInputField(passwordState,"Password","Password")
 
         Text(
             modifier = Modifier.align(Alignment.End),
@@ -162,7 +109,7 @@ private fun App(modifier: Modifier, navHostController: NavHostController, role: 
 
             }
             MyOutlinedButton("Registration") {
-                navHostController.navigate(Destination.Registration(role))
+                navHostController.navigate(Destination.RoleScreen)
             }
         }
 
