@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import com.rvcode.e_service.utility.Destination
 import com.rvcode.e_service.views.AddNewServideTypeScreen
 import com.rvcode.e_service.views.ElectricianHomeScreen
+import com.rvcode.e_service.views.ElectricianNavigation
 import com.rvcode.e_service.views.HomeScreen
 import com.rvcode.e_service.views.RegistrationScreen
 
@@ -29,8 +30,8 @@ fun AppNavHost(navController: NavHostController){
         composable<Destination.Home> {
             HomeScreen(navController)
         }
-        composable<Destination.ElectricianHome> {
-            ElectricianHomeScreen(navController)
+        composable<Destination.ElectricianNavigation> {
+            ElectricianNavigation(navController)
         }
         composable<Destination.RoleScreen> {
                 RoleScreen(navController)

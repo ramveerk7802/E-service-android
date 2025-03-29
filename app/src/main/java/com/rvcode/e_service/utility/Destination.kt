@@ -25,10 +25,19 @@ sealed class Destination {
     data object Home:Destination()
 
     @Serializable
-    data object ElectricianHome:Destination()
+    data object ElectricianNavigation:Destination()
 
     @Serializable
     data object AddNewServiceTye:Destination()
 
+
+    @Serializable
+    data object ElectricianHome:Destination()
+
+    @Serializable
+    data object Upcoming:Destination()
+
+    @Serializable
+    data object History:Destination()
 
 }
