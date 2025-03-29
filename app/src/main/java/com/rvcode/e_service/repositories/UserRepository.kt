@@ -67,6 +67,15 @@ class UserRepository {
         }
     }
 
+    suspend fun signInWithEmailAndPassword(email: String,password: String):FirebaseUser?{
+       return try {
+            val result = auth.signInWithEmailAndPassword(email,password).await()
+            result.user
+        }catch (e:Exception){
+            null
+        }
+    }
+
 
     suspend fun checkRole():String?{
         return try {

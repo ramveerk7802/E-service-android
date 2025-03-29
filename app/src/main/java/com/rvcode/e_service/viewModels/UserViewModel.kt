@@ -32,6 +32,26 @@ class UserViewModel :ViewModel() {
         }
     }
 
+    fun signInWithEmailAndPassword(email: String,password: String,onSuccess: () -> Unit,onFailure: (String) -> Unit){
+        viewModelScope.launch {
+            _isProcess.postValue(true)
+            if(!repository.validateEmail(email)){
+                _isProcess.postValue(false)
+                onFailure("Enter the valid email")
+            }
+
+            else{
+                val result = repository.signInWithEmailAndPassword(email,password)
+                if(result==null){
+                    _isProcess.postValue(false)
+                    onFailure("Enter the correct credential.")
+                }else{
+                    _isProcess.postValue(false)
+                    onSuccess()
+                }
+            }
+        }
+    }
 
 
     fun registration(name:String, email: String,phone:String,password:String, address:String,city:String,state:String,pinCode:String,aadhaarNumber:String?,aadhaarImageUri:String,

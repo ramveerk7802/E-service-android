@@ -8,7 +8,10 @@ import kotlinx.serialization.Serializable
 sealed class Destination {
 
     @Serializable
-     data object RoleScreen:Destination()
+    data object SplashScreen:Destination()
+
+    @Serializable
+    data object RoleScreen:Destination()
 
 
     @Serializable
@@ -23,4 +26,9 @@ sealed class Destination {
 
     @Serializable
     data object ElectricianHome:Destination()
+
+    @Serializable
+    data object AddNewServiceTye:Destination()
+
+
 }

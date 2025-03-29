@@ -28,28 +28,6 @@ import com.rvcode.e_service.viewModels.UserViewModel
 @Composable
 fun HomeScreen(navHostController: NavHostController){
 
-    val userViewModel:UserViewModel= viewModel()
-    val myRole = userViewModel.myRole.observeAsState().value
-    val currentUser = Firebase.auth.currentUser
-
-    if(currentUser==null){
-        LaunchedEffect(key1 = Unit){
-            navHostController.navigate(Destination.SignIn)
-        }
-    }else{
-
-        LaunchedEffect(myRole){
-            myRole?.let {
-                if(myRole==MyRole.ELECTRICIAN.name){
-                    navHostController.navigate(Destination.ElectricianHome){
-                        popUpTo<Destination.Home>{
-                            inclusive=true
-                        }
-                    }
-                }
-            }
-
-        }
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
@@ -59,16 +37,15 @@ fun HomeScreen(navHostController: NavHostController){
                 )
             }
         ) {
-            App(Modifier.padding(it),navHostController,userViewModel)
+            App(Modifier.padding(it),navHostController)
         }
-    }
+
 
 }
 
 @Composable
-private fun App(modifier: Modifier, navHostController: NavHostController,userViewModel: UserViewModel) {
+private fun App(modifier: Modifier, navHostController: NavHostController) {
 
-    val isProcess = userViewModel.isProcess.observeAsState(false).value
 
 
     Column (
@@ -77,9 +54,6 @@ private fun App(modifier: Modifier, navHostController: NavHostController,userVie
         verticalArrangement = Arrangement.Center
         ){
 
-        if(isProcess){
-            LoadingDialog(text = "")
-        }
 
     }
 

@@ -218,8 +218,8 @@ private fun App(modifier: Modifier, navHostController: NavHostController, role: 
                     currentRole,
                     viewModel,
                     onSuccess = {
-                        navHostController.navigate(Destination.Home){
-                            popUpTo<Destination.Home>{
+                        navHostController.navigate(Destination.SplashScreen){
+                            popUpTo<Destination.SplashScreen>{
                                 inclusive=true
                             }
                         }
@@ -258,7 +258,7 @@ private fun App(modifier: Modifier, navHostController: NavHostController, role: 
     }
 }
 
-fun createNewRegistration(
+private fun createNewRegistration(
     context:Context,
     name: String,
     email: String,
@@ -278,7 +278,7 @@ fun createNewRegistration(
     if(name.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank() || address.isBlank() || city.isBlank() || state.isBlank() ||pinCode.isBlank()){
         Toast.makeText(context,"All field are required.",Toast.LENGTH_SHORT).show()
     }
-    else if(role==MyRole.ELECTRICIAN && aadhaarNumber.isBlank() || aadhaarImageUri.isBlank()){
+    else if(role==MyRole.ELECTRICIAN && ( aadhaarNumber.isNullOrBlank() || aadhaarNumber.isBlank() || aadhaarImageUri.isBlank())){
         Toast.makeText(context,"All field are required.",Toast.LENGTH_SHORT).show()
     }else{
         viewModel.registration(name = name, email = email,phone=phone,password = password, address = address,city=city,state = state, pinCode =  pinCode, aadhaarNumber = aadhaarNumber, aadhaarImageUri = aadhaarImageUri, role = role, onSuccess = {

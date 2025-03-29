@@ -2,7 +2,9 @@ package com.rvcode.e_service.utilityCompose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
@@ -154,10 +156,13 @@ fun LoadingDialog(text:String){
         text = {
             Column (
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 CircularProgressIndicator()
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
                 Text(
                     text = text
                 )
