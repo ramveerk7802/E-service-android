@@ -6,11 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.rvcode.e_service.utility.BottomNavigationItem
 import com.rvcode.e_service.utility.Destination
-import com.rvcode.e_service.views.AddNewServideTypeScreen
+import com.rvcode.e_service.views.AddEditNewServideTypeScreen
+
+import com.rvcode.e_service.views.CustomerNavigation
 import com.rvcode.e_service.views.ElectricianHomeScreen
 import com.rvcode.e_service.views.ElectricianNavigation
-import com.rvcode.e_service.views.HomeScreen
+
 import com.rvcode.e_service.views.RegistrationScreen
 
 import com.rvcode.e_service.views.RoleScreen
@@ -27,8 +30,8 @@ fun AppNavHost(navController: NavHostController){
         composable<Destination.SplashScreen> {
             SplashScreen(navController)
         }
-        composable<Destination.Home> {
-            HomeScreen(navController)
+        composable<Destination.CustomerNavigation> {
+            CustomerNavigation(navController)
         }
         composable<Destination.ElectricianNavigation> {
             ElectricianNavigation(navController)
@@ -44,9 +47,12 @@ fun AppNavHost(navController: NavHostController){
             RegistrationScreen(navController,args.role)
         }
 
-        composable<Destination.AddNewServiceTye> {
-            AddNewServideTypeScreen(navController)
+        composable<Destination.AddEditNewServiceTye> {
+            val args = it.toRoute<Destination.AddEditNewServiceTye>()
+            val isEdit = args.isEdit
+            AddEditNewServideTypeScreen(navController, isEdit = isEdit)
         }
+
     }
 
 }

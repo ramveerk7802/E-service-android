@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.rvcode.e_service.models.User
 import com.rvcode.e_service.repositories.UserRepository
 import com.rvcode.e_service.utility.MyRole
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class UserViewModel :ViewModel() {
@@ -16,6 +18,8 @@ class UserViewModel :ViewModel() {
     private val _isProcess = MutableLiveData<Boolean>(false)
     private val _myRole = MutableLiveData<String?>()
 
+    private val _name = MutableStateFlow("")
+    val name = _name.asStateFlow()
 
     val isProcess :LiveData<Boolean> = _isProcess
     val myRole:LiveData<String?> = _myRole
@@ -30,6 +34,9 @@ class UserViewModel :ViewModel() {
             }
             _isProcess.postValue(false)
         }
+    }
+    fun nameTextChange(text:String){
+        _name.value =text
     }
 
     fun signInWithEmailAndPassword(email: String,password: String,onSuccess: () -> Unit,onFailure: (String) -> Unit){

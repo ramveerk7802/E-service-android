@@ -29,7 +29,7 @@ fun SplashScreen(navController: NavHostController) {
     val myRole = userViewModel.myRole.observeAsState().value
     val currentUser = Firebase.auth.currentUser
 
-    LaunchedEffect(currentUser) {
+    LaunchedEffect(myRole) {
         delay(1500) // Show splash screen for 2 seconds
 
         if (currentUser == null) {
@@ -45,7 +45,7 @@ fun SplashScreen(navController: NavHostController) {
                         }
                     }
                     MyRole.CUSTOMER.name -> {
-                        navController.navigate(Destination.Home) {
+                        navController.navigate(Destination.CustomerNavigation) {
                             popUpTo(Destination.SplashScreen) { inclusive = true }
                         }
                     }

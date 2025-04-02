@@ -35,6 +35,8 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -58,6 +60,7 @@ import com.rvcode.e_service.R
 import com.rvcode.e_service.utility.BottomNavigationItem
 import com.rvcode.e_service.utility.Destination
 import com.rvcode.e_service.utility.NavigationItem
+import com.rvcode.e_service.utilityCompose.ProfileHeader
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,12 +70,23 @@ fun ElectricianNavigation(navHostController: NavHostController){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable{ mutableIntStateOf(0) }
+    val showFloatingButton = remember { mutableStateOf(false) }
+
+    val electricianNavHostController = rememberNavController()
+    val titleIndex = remember { mutableIntStateOf(0) }
+
+    val topBarTitle = when(titleIndex.intValue){
+        0 -> "Home"
+        1->"Up Comming"
+        2-> "History"
+        else->"Home"
+    }
 
 
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet(
-                modifier = Modifier.width(280.dp)
+                modifier = Modifier.fillMaxWidth(0.8f)
             ) {
 
                 ProfileHeader(
@@ -116,7 +130,7 @@ fun ElectricianNavigation(navHostController: NavHostController){
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "Dashboard")
+                        Text(text = topBarTitle)
                     },
                     navigationIcon = {
                         IconButton(
@@ -136,27 +150,51 @@ fun ElectricianNavigation(navHostController: NavHostController){
             },
 
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = {
-                        navHostController.navigate(Destination.AddNewServiceTye)
-                    },
-                    shape = CircleShape
-                ){
-                    Icon(
-                        imageVector = Icons.Outlined.Add,
-                        contentDescription = "",
-                    )
+                if(showFloatingButton.value){
+                    FloatingActionButton(
+                        onClick = {
+                            navHostController.navigate(Destination.AddEditNewServiceTye())
+                        },
+                        shape = CircleShape
+                    ){
+                        Icon(
+                            imageVector = Icons.Outlined.Add,
+                            contentDescription = "",
+                        )
+                    }
                 }
             },
             bottomBar = {
                 BottomAppBar{
-                   MyBottomBar(navHostController)
+                   MyBottomBar(electricianNavHostController)
                 }
             }
         ){
             Box(
                 modifier = Modifier.padding(it)
             ){
+                NavHost(
+                    navController = electricianNavHostController,
+                    startDestination = BottomNavigationItem.ElectricianHome.route
+
+                ){
+                    composable(route = BottomNavigationItem.ElectricianHome.route){
+                        showFloatingButton.value=true
+                        titleIndex.intValue =0
+                        ElectricianHomeScreen(navHostController)
+                    }
+                    composable(BottomNavigationItem.Upcoming.route){
+                        showFloatingButton.value=false
+                        titleIndex.intValue =1
+                        UpComingScreen(electricianNavHostController)
+                    }
+                    composable(BottomNavigationItem.History.route){
+                        showFloatingButton.value=false
+                        titleIndex.intValue =2
+                        HistoryScreen(electricianNavHostController)
+                    }
+
+                }
 
             }
         }
@@ -168,13 +206,28 @@ fun ElectricianNavigation(navHostController: NavHostController){
 
 
 @Composable
-fun MyBottomBar(navHostController: NavHostController) {
+fun MyBottomBar(electricianNavHostController: NavHostController) {
+
+
+    val navBackStack by electricianNavHostController.currentBackStackEntryAsState()
+    val currentDestination = navBackStack?.destination
 
     NavigationBar {
         BottomNavigationItem.items.forEachIndexed { index, bottomNavigationItem ->
             NavigationBarItem(
-                selected = true,
-                onClick = {},
+                selected = currentDestination?.hierarchy?.any { it.route==bottomNavigationItem.route }==true,
+                onClick = {
+                    if(currentDestination?.route!=bottomNavigationItem.route){
+                        electricianNavHostController.navigate( route = bottomNavigationItem.route){
+                            popUpTo(electricianNavHostController.graph.startDestinationId){
+                                saveState =true
+                            }
+                            launchSingleTop =true
+                            restoreState =true
+
+                        }
+                    }
+                },
                 label = { Text( text = bottomNavigationItem.title) },
                 icon = { Icon(
                     painter = painterResource(bottomNavigationItem.icon),
@@ -187,67 +240,5 @@ fun MyBottomBar(navHostController: NavHostController) {
 }
 
 
-@Composable
-fun ProfileHeader(imageUrl: String, name: String, email: String, onEditClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(Color(0xFF6A11CB), Color(0xFF2575FC)) // Purple to Blue Gradient
-                )
-            )
-            .padding(16.dp)
-    ) {
-        Column {
-            // Edit Button at the top right
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.TopEnd
-            ) {
-                IconButton(onClick = onEditClick) {
-                    Icon(
-                        imageVector = Icons.Outlined.Edit,
-                        contentDescription = "Edit Profile",
-                        tint = Color.White
-                    )
-                }
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                AsyncImage(
-                    model = imageUrl.ifBlank { R.drawable.logo },
-                    contentDescription = "User Profile",
-                    modifier = Modifier
-                        .size(56.dp)
-                        .clip(CircleShape)
-                        .border(2.dp, Color.White, CircleShape)
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                Column {
-                    Text(
-                        text = name,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                    Text(
-                        text = email,
-                        fontSize = 14.sp,
-                        color = Color.White.copy(alpha = 0.8f)
-                    )
-                }
-            }
-        }
-    }
-}
 
 
-@Composable
-private fun Content(modifier: Modifier){
-
-}

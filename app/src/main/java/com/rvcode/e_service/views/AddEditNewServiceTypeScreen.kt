@@ -15,12 +15,13 @@ import com.rvcode.e_service.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddNewServideTypeScreen(navHostController: NavHostController){
+fun AddEditNewServideTypeScreen(navHostController: NavHostController,isEdit:Boolean){
+    val topBar = if(isEdit) "Edit Service" else "Add Service"
     Scaffold (
         topBar = {
             TopAppBar(
                 title = {
-                    Text( text = "Add")
+                    Text( text = topBar)
                 },
                 navigationIcon = {
                     IconButton(

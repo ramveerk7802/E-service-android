@@ -33,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -85,6 +86,8 @@ private fun App(modifier: Modifier, navHostController: NavHostController,viewMod
     val passwordState = remember { mutableStateOf("") }
     val context = LocalContext.current
 
+
+
     Column(
         modifier = modifier
             .imePadding()
@@ -99,6 +102,7 @@ private fun App(modifier: Modifier, navHostController: NavHostController,viewMod
             model = R.drawable.logo,
             contentDescription = "Banner",
         )
+
         MyInputTextField(emailState,"Email","example@gmail.com",Icons.Outlined.Email)
         MyPasswordInputField(passwordState,"Password","Password")
 

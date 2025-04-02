@@ -22,22 +22,15 @@ sealed class Destination {
     data class Registration(val role:MyRole?=null):Destination()
 
     @Serializable
-    data object Home:Destination()
+    data object CustomerNavigation:Destination()
 
     @Serializable
     data object ElectricianNavigation:Destination()
 
     @Serializable
-    data object AddNewServiceTye:Destination()
+    data class AddEditNewServiceTye(
+        val isEdit:Boolean=false
+    ):Destination()
 
-
-    @Serializable
-    data object ElectricianHome:Destination()
-
-    @Serializable
-    data object Upcoming:Destination()
-
-    @Serializable
-    data object History:Destination()
 
 }
